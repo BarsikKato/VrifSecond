@@ -2,6 +2,7 @@ using Core.Keyboard.Abstractions;
 using Core.Keyboard.Controllers;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Core.Keyboard.Views
@@ -10,7 +11,7 @@ namespace Core.Keyboard.Views
     {
         [SerializeField] private Transform layoutKeysRoot;
         [SerializeField] private SymbolKeyButtonView symbolKeyPrefab;
-        [SerializeField] private Transform layoutKeysRowPrefab;
+        [SerializeField] private List<RectTransform> layoutKeysRows;
 
         [Inject] private readonly IKeyboardController _keyboardController;
         [Inject] private readonly DiContainer _diContainer;
@@ -18,7 +19,7 @@ namespace Core.Keyboard.Views
         // Нужен для того, чтобы не инстансить
         // весь набор кнопок при смене раскалдки
         private readonly List<SymbolKeyButtonView> _layoutKeysPool = new();
-        private readonly List<Transform> _layoutKeysRows = new();
+        
 
         private void Awake()
         {
@@ -44,12 +45,12 @@ namespace Core.Keyboard.Views
             }
 
             IEnumerator<int> rowLengthsEnumerator = layout.RowLengths.GetEnumerator();
-            int currentRow = -1;
-            int currentRowFreeSpace = 0;
-            ClearRows();
+            int currentRow = 0;
+            int currentRowFreeSpace = GetCurrentRowLength(rowLengthsEnumerator);
             for (int i = 0; i < _layoutKeysPool.Count; i++)
             {
                 SymbolKeyButtonView view = _layoutKeysPool[i];
+                view.transform.SetParent(null);
                 if (i >= keys.Count)
                 {
                     view.gameObject.SetActive(false);
@@ -59,19 +60,14 @@ namespace Core.Keyboard.Views
                 if (currentRowFreeSpace == 0)
                 {
                     currentRow++;
-                    MoveRowLengthsEnumerator(rowLengthsEnumerator);
-                    currentRowFreeSpace = rowLengthsEnumerator.Current;
+                    currentRowFreeSpace = GetCurrentRowLength(rowLengthsEnumerator);
                 }
 
-                Transform rowTransform = GetCurrentRowTransform(currentRow);
-                view.transform.SetParent(rowTransform, false);
-                // Фикс странного бага со скейлом.
-                view.transform.localScale = Vector3.one;
+                SetKey(view, layoutKeysRows[currentRow], keys[i].Symbol);
                 currentRowFreeSpace--;
-
-                view.SetSymbol(keys[i].Symbol);
-                view.gameObject.SetActive(true);
             }
+
+            RebuildLayouts();
         }
 
         private void AddItemsToPool(int count)
@@ -85,6 +81,12 @@ namespace Core.Keyboard.Views
             }
         }
 
+        private int GetCurrentRowLength(IEnumerator<int> rowLengthsEnumerator)
+        {
+            MoveRowLengthsEnumerator(rowLengthsEnumerator);
+            return rowLengthsEnumerator.Current;
+        }
+
         private void MoveRowLengthsEnumerator(IEnumerator<int> rowLengthsEnumerator)
         {
             if (!rowLengthsEnumerator.MoveNext())
@@ -94,27 +96,21 @@ namespace Core.Keyboard.Views
             }
         }
 
-        private Transform GetCurrentRowTransform(int currentRow)
+        private void SetKey(SymbolKeyButtonView view, RectTransform rowTransform, char symbol)
         {
-            if (currentRow == _layoutKeysRows.Count)
-            {
-                Transform row = Instantiate(layoutKeysRowPrefab, layoutKeysRoot, false);
-                row.localScale = Vector3.one;
-                _layoutKeysRows.Add(row);
-            }
+            view.transform.SetParent(rowTransform, false);
+            // Фикс странного бага со скейлом.
+            view.transform.localScale = Vector3.one;
 
-            return _layoutKeysRows[currentRow];
+            view.SetSymbol(symbol);
+            view.gameObject.SetActive(true);
         }
 
-        private void ClearRows()
+        private void RebuildLayouts()
         {
-            while (_layoutKeysRows.Count != 0)
+            foreach (RectTransform layout in layoutKeysRows)
             {
-                Transform lastRow = _layoutKeysRows[_layoutKeysRows.Count - 1];
-                _layoutKeysRows.Remove(lastRow);
-                lastRow.DetachChildren();
-
-                Destroy(lastRow.gameObject);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(layout);
             }
         }
     }
