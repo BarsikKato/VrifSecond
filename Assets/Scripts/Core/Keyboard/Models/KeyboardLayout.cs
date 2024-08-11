@@ -1,24 +1,24 @@
-﻿using UnityEngine;
+﻿using Core.Keyboard.Abstractions;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.Keyboard.Models
 {
-    /// <summary>
-    /// Раскладка клавиатуры. Представляет из себя именованный набор клавиш с символами.
-    /// </summary>
+    /// <inheritdoc cref="Core.Keyboard.Abstractions.IKeyboardLayout"/>
     [CreateAssetMenu(fileName = "KeyboardLayout", menuName = "Keyboard/KeyboardLayout")]
-    public sealed class KeyboardLayout : ScriptableObject
+    public sealed class KeyboardLayout : ScriptableObject, IKeyboardLayout
     {
         [SerializeField] private string layoutName;
         [SerializeField] private KeySet keySet;
+        [SerializeField] private int[] rowLengths;
 
-        /// <summary>
-        /// Краткое название раскладки.
-        /// </summary>
+        /// <inheritdoc/>
         public string LayoutName => layoutName;
 
-        /// <summary>
-        /// Набор символов данной раскладки.
-        /// </summary>
-        public KeySet KeySet => keySet;
+        /// <inheritdoc/>
+        public IKeySet KeySet => keySet;
+
+        /// <inheritdoc/>
+        public IEnumerable<int> RowLengths => rowLengths;
     }
 }

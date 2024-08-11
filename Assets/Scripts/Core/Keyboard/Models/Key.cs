@@ -1,27 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using Core.Keyboard.Abstractions;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Core.Keyboard.Models
 {
-    /// <summary>
-    /// Клавиша с символом на клавиатуре.
-    /// </summary>
+    /// <inheritdoc cref="Core.Keyboard.Abstractions.IKey"/>
     [System.Serializable]
-    public struct Key
+    public struct Key : IKey
     {
         [SerializeField] private char symbol;
         [SerializeField] private Key[] subkeys;
 
-        /// <summary>
-        /// Символ клавиши.
-        /// </summary>
+        /// <inheritdoc/>
         public char Symbol => symbol;
 
-        /// <summary>
-        /// Вложенные клавиши.
-        /// </summary>
-        public IReadOnlyCollection<Key> Subkeys => subkeys;
+        /// <inheritdoc/>
+        public IReadOnlyCollection<IKey> Subkeys => subkeys.Select(x => x as IKey).ToArray();
 
         public Key(char symbol) : this(symbol, null) { }
 
