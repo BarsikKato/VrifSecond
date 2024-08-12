@@ -23,6 +23,11 @@ namespace Core.Keyboard.Models
                     keySetDataLoader.LoadData(keys);
                 }
             }
+
+            if (GUI.changed)
+            {
+                EditorUtility.SetDirty(target);
+            }
         }
 
         private Key[] ReadData()

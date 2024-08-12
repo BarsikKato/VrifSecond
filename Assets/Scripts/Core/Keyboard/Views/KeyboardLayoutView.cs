@@ -99,7 +99,7 @@ namespace Core.Keyboard.Views
         private void SetKey(SymbolKeyButtonView view, RectTransform rowTransform, char symbol)
         {
             view.transform.SetParent(rowTransform, false);
-            // Фикс странного бага со скейлом.
+            view.transform.localRotation = Quaternion.identity;
             view.transform.localScale = Vector3.one;
 
             view.SetSymbol(symbol);
