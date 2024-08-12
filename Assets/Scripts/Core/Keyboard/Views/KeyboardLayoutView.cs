@@ -13,7 +13,7 @@ namespace Core.Keyboard.Views
         [SerializeField] private SymbolKeyButtonView symbolKeyPrefab;
         [SerializeField] private List<RectTransform> layoutKeysRows;
 
-        [Inject] private readonly IKeyboardController _keyboardController;
+        [Inject] private readonly IKeyboardEventNotifier _keyboardEventNotifier;
         [Inject] private readonly DiContainer _diContainer;
 
         // Нужен для того, чтобы не инстансить
@@ -23,15 +23,15 @@ namespace Core.Keyboard.Views
 
         private void Awake()
         {
-            _keyboardController.KeyboardLayoutChanged += KeyboardController_KeyboardLayoutChanged;
+            _keyboardEventNotifier.KeyboardLayoutChanged += KeyboardEventNotifier_KeyboardLayoutChanged;
         }
 
         private void OnDestroy()
         {
-            _keyboardController.KeyboardLayoutChanged -= KeyboardController_KeyboardLayoutChanged;
+            _keyboardEventNotifier.KeyboardLayoutChanged -= KeyboardEventNotifier_KeyboardLayoutChanged;
         }
 
-        private void KeyboardController_KeyboardLayoutChanged(IKeyboardLayout layout)
+        private void KeyboardEventNotifier_KeyboardLayoutChanged(IKeyboardLayout layout)
         {
             ChangeLayoutKeys(layout);
         }

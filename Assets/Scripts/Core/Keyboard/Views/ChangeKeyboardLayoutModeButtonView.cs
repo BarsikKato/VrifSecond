@@ -19,22 +19,23 @@ namespace Core.Keyboard.Views
         [SerializeField] private KeyboardLayout keyboardLayoutMode;
 
         [Inject] private readonly IKeyboardController _keyboardController;
+        [Inject] private readonly IKeyboardEventNotifier _keyboardEventNotifier;
 
         private IKeyboardLayout _lastKeyboardLayout;
         private bool isOn = false;
 
         private void Awake()
         {
-            _keyboardController.KeyboardLayoutChanged += KeyboardController_KeyboardLayoutChanged;
+            _keyboardEventNotifier.KeyboardLayoutChanged += KeyboardEventNotifier_KeyboardLayoutChanged;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            _keyboardController.KeyboardLayoutChanged -= KeyboardController_KeyboardLayoutChanged;
+            _keyboardEventNotifier.KeyboardLayoutChanged -= KeyboardEventNotifier_KeyboardLayoutChanged;
         }
 
-        private void KeyboardController_KeyboardLayoutChanged(IKeyboardLayout layout)
+        private void KeyboardEventNotifier_KeyboardLayoutChanged(IKeyboardLayout layout)
         {
             if (layout != keyboardLayoutMode)
             {

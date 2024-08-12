@@ -3,7 +3,7 @@ using System;
 
 namespace Core.Keyboard.Controllers
 {
-    public sealed class KeyboardController : IKeyboardController
+    public sealed class KeyboardController : IKeyboardController, IKeyboardEventNotifier
     {
         public event Action<IKeyboardLayout> KeyboardLayoutChanged;
         public event Action<char> SymbolWritten;

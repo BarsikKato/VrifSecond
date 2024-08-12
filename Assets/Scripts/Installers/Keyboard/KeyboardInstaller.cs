@@ -1,3 +1,4 @@
+using Core.Keyboard.Abstractions;
 using Core.Keyboard.Controllers;
 using Core.Keyboard.Models;
 using Core.Keyboard.Providers;
@@ -16,10 +17,14 @@ namespace Installers.Keyboard
             Container
                 .BindInstance<IKeyboardLayoutProvider>(keyboardLayoutProvider)
                 .AsTransient();
-                
+            
+            KeyboardController controller = new KeyboardController();
             Container
-                .Bind<IKeyboardController>()
-                .To<KeyboardController>()
+                .BindInstance<IKeyboardController>(controller)
+                .AsSingle();
+
+            Container
+                .BindInstance<IKeyboardEventNotifier>(controller)
                 .AsSingle();
         }
     }

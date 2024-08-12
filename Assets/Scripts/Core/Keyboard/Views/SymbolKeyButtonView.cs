@@ -1,3 +1,4 @@
+using Core.Keyboard.Abstractions;
 using Core.Keyboard.Controllers;
 using Core.UI;
 using System;
@@ -16,21 +17,22 @@ namespace Core.Keyboard.Views
         [SerializeField] private Text buttonLabel;
 
         [Inject] private readonly IKeyboardController _keyboardController;
+        [Inject] private readonly IKeyboardEventNotifier _keyboardEventNotifier;
 
         private void Awake()
         {
             if (buttonLabel != null)
-                _keyboardController.CaseChanged += KeyboardController_CaseChanged;
+                _keyboardEventNotifier.CaseChanged += KeyboardEventNotifier_CaseChanged;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
             if (buttonLabel != null)
-                _keyboardController.CaseChanged -= KeyboardController_CaseChanged;
+                _keyboardEventNotifier.CaseChanged -= KeyboardEventNotifier_CaseChanged;
         }
 
-        private void KeyboardController_CaseChanged(bool isUpperCase)
+        private void KeyboardEventNotifier_CaseChanged(bool isUpperCase)
         {
             Func<char, char> caseChangeHandler = isUpperCase ? char.ToUpper : char.ToLower;
             SetSymbol(caseChangeHandler(symbol));
