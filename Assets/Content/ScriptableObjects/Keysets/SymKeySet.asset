@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362ce525eab736e4aba63561443694fc, type: 3}
+  m_Name: SymKeySet
+  m_EditorClassIdentifier: 
+  keys:
+  - symbol: 64
+    subkeys: []
+  - symbol: 35
+    subkeys: []
+  - symbol: 36
+    subkeys: []
+  - symbol: 38
+    subkeys: []
+  - symbol: 95
+    subkeys: []
+  - symbol: 45
+    subkeys: []
+  - symbol: 40
+    subkeys: []
+  - symbol: 41
+    subkeys: []
+  - symbol: 61
+    subkeys: []
+  - symbol: 37
+    subkeys: []
+  - symbol: 34
+    subkeys: []
+  - symbol: 42
+    subkeys: []
+  - symbol: 39
+    subkeys: []
+  - symbol: 58
+    subkeys: []
+  - symbol: 47
+    subkeys: []
+  - symbol: 33
+    subkeys: []
+  - symbol: 63
+    subkeys: []
+  - symbol: 43
+    subkeys: []

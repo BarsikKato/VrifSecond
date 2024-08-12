@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362ce525eab736e4aba63561443694fc, type: 3}
+  m_Name: RuKeySet
+  m_EditorClassIdentifier: 
+  keys:
+  - symbol: 1081
+    subkeys: []
+  - symbol: 1094
+    subkeys: []
+  - symbol: 1091
+    subkeys: []
+  - symbol: 1082
+    subkeys: []
+  - symbol: 1077
+    subkeys:
+    - symbol: 1105
+      subkeys: []
+  - symbol: 1085
+    subkeys: []
+  - symbol: 1075
+    subkeys: []
+  - symbol: 1096
+    subkeys: []
+  - symbol: 1097
+    subkeys: []
+  - symbol: 1079
+    subkeys: []
+  - symbol: 1093
+    subkeys: []
+  - symbol: 1098
+    subkeys: []
+  - symbol: 1092
+    subkeys: []
+  - symbol: 1099
+    subkeys: []
+  - symbol: 1074
+    subkeys: []
+  - symbol: 1072
+    subkeys: []
+  - symbol: 1087
+    subkeys: []
+  - symbol: 1088
+    subkeys: []
+  - symbol: 1086
+    subkeys: []
+  - symbol: 1083
+    subkeys: []
+  - symbol: 1076
+    subkeys: []
+  - symbol: 1078
+    subkeys: []
+  - symbol: 1101
+    subkeys: []
+  - symbol: 1103
+    subkeys: []
+  - symbol: 1095
+    subkeys: []
+  - symbol: 1089
+    subkeys: []
+  - symbol: 1084
+    subkeys: []
+  - symbol: 1080
+    subkeys: []
+  - symbol: 1090
+    subkeys: []
+  - symbol: 1100
+    subkeys: []
+  - symbol: 1073
+    subkeys: []
+  - symbol: 1102
+    subkeys: []
