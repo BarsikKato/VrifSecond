@@ -1,5 +1,6 @@
 using Core.Keyboard.Controllers;
 using Core.UI;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -16,13 +17,33 @@ namespace Core.Keyboard.Views
 
         [Inject] private readonly IKeyboardController _keyboardController;
 
+        private void Awake()
+        {
+            if (buttonLabel != null)
+                _keyboardController.CaseChanged += KeyboardController_CaseChanged;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (buttonLabel != null)
+                _keyboardController.CaseChanged -= KeyboardController_CaseChanged;
+        }
+
+        private void KeyboardController_CaseChanged(bool isUpperCase)
+        {
+            Func<char, char> caseChangeHandler = isUpperCase ? char.ToUpper : char.ToLower;
+            SetSymbol(caseChangeHandler(symbol));
+        }
+
         /// <summary>
         /// Установить символ для данной кнопки.
         /// </summary>
         public void SetSymbol(char symbol)
         {
             this.symbol = symbol;
-            buttonLabel.text = symbol.ToString();
+            if (buttonLabel != null)
+                buttonLabel.text = symbol.ToString();
         }
 
         protected override void OnClick()

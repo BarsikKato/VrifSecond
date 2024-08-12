@@ -7,10 +7,19 @@ namespace Core.Keyboard.Controllers
     {
         event Action<IKeyboardLayout> KeyboardLayoutChanged;
         event Action<char> SymbolWritten;
+        event Action SymbolRemoved;
+        event Action<bool> CaseChanged;
+        event Action EnterPressed;
 
         void SetKeyboardLayout(IKeyboardLayout keyboardLayout);
 
         void WriteSymbol(char symbol);
+
+        void RemoveSymbol();
+
+        void SetUpperCase(bool value);
+
+        void PressEnter();
     }
 }
 
