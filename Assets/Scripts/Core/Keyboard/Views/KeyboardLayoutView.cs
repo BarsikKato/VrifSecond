@@ -1,5 +1,4 @@
 using Core.Keyboard.Abstractions;
-using Core.Keyboard.Controllers;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +6,9 @@ using Zenject;
 
 namespace Core.Keyboard.Views
 {
+    /// <summary>
+    ///  ласс-представление раскладки клавиатуры.
+    /// </summary>
     public sealed class KeyboardLayoutView : MonoBehaviour
     {
         [SerializeField] private Transform layoutKeysRoot;
@@ -20,7 +22,6 @@ namespace Core.Keyboard.Views
         // весь набор кнопок при смене раскалдки
         private readonly List<SymbolKeyButtonView> _layoutKeysPool = new();
         
-
         private void Awake()
         {
             _keyboardEventNotifier.KeyboardLayoutChanged += KeyboardEventNotifier_KeyboardLayoutChanged;
@@ -39,11 +40,14 @@ namespace Core.Keyboard.Views
         private void ChangeLayoutKeys(IKeyboardLayout layout)
         {
             IReadOnlyList<IKey> keys = layout.KeySet.Keys;
+            // ≈сли кнопок в текущей раскладке больше, чем в предыдущей,
+            // то добавл€ем их в пулл.
             if (_layoutKeysPool.Count < keys.Count)
             {
                 AddItemsToPool(keys.Count - _layoutKeysPool.Count);
             }
 
+            // —писок указанных длин строки в раскладке перебираетс€ циклично.
             IEnumerator<int> rowLengthsEnumerator = layout.RowLengths.GetEnumerator();
             int currentRow = 0;
             int currentRowFreeSpace = GetCurrentRowLength(rowLengthsEnumerator);
@@ -108,6 +112,8 @@ namespace Core.Keyboard.Views
 
         private void RebuildLayouts()
         {
+            // “ребуетс€, так как автоматическа€ перестройка Layout
+            // в Unity работает непредсказуемо.
             foreach (RectTransform layout in layoutKeysRows)
             {
                 LayoutRebuilder.ForceRebuildLayoutImmediate(layout);

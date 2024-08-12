@@ -2,6 +2,9 @@ using System;
 
 namespace Core.Keyboard.Abstractions
 {
+    /// <summary>
+    /// ќповещает о действи€х совершенных на клавиатуре.
+    /// </summary>
     public interface IKeyboardEventNotifier
     {
         event Action<IKeyboardLayout> KeyboardLayoutChanged;

@@ -1,8 +1,10 @@
 using Core.Keyboard.Abstractions;
-using System;
 
 namespace Core.Keyboard.Controllers
 {
+    /// <summary>
+    /// Дает доступ к управлению клавиатурой.
+    /// </summary>
     public interface IKeyboardController
     {
         void SetKeyboardLayout(IKeyboardLayout keyboardLayout);

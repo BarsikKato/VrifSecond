@@ -10,6 +10,9 @@ using Zenject;
 
 namespace Core.Keyboard.Views
 {
+    /// <summary>
+    /// Кнопка смены раскладки.
+    /// </summary>
     public sealed class ChangeLayoutButtonView : ButtonView
     {
         [SerializeField] private Text buttonLabel;
@@ -39,6 +42,7 @@ namespace Core.Keyboard.Views
 
         private void SetNextLayout()
         {
+            // Циклично переключает раскладки.
             NextLayout();
             SetCurrentLayout();
         }

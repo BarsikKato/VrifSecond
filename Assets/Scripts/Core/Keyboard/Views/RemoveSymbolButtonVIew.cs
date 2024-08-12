@@ -4,7 +4,10 @@ using Zenject;
 
 namespace Core.Keyboard.Views
 {
-    public sealed class RemoveSymbolButtonVIew : ButtonView
+    /// <summary>
+    /// Кнопка стирания символа.
+    /// </summary>
+    public sealed class RemoveSymbolButtonView : ButtonView
     {
         [Inject] private readonly IKeyboardController _keyboardController;
 

@@ -4,6 +4,9 @@ using Zenject;
 
 namespace Core.Keyboard.Views
 {
+    /// <summary>
+    ///  нопка смены регистра клавиатуры.
+    /// </summary>
     public sealed class ChangeCaseButtonView : ButtonView
     {
         [Inject] private readonly IKeyboardController _keyboardController;
