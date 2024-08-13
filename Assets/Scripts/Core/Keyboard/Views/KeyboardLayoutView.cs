@@ -12,8 +12,11 @@ namespace Core.Keyboard.Views
     public sealed class KeyboardLayoutView : MonoBehaviour
     {
         [SerializeField] private Transform layoutKeysRoot;
+        [SerializeField] private Transform poolRoot;
         [SerializeField] private SymbolKeyButtonView symbolKeyPrefab;
         [SerializeField] private List<RectTransform> layoutKeysRows;
+        [Space]
+        [SerializeField] private List<RectTransform> layoutsForRebuild;
 
         [Inject] private readonly IKeyboardEventNotifier _keyboardEventNotifier;
         [Inject] private readonly DiContainer _diContainer;
@@ -54,7 +57,7 @@ namespace Core.Keyboard.Views
             for (int i = 0; i < _layoutKeysPool.Count; i++)
             {
                 SymbolKeyButtonView view = _layoutKeysPool[i];
-                view.transform.SetParent(null);
+                view.transform.SetParent(poolRoot);
                 if (i >= keys.Count)
                 {
                     view.gameObject.SetActive(false);
@@ -79,7 +82,7 @@ namespace Core.Keyboard.Views
             for (int i = 0; i < count; i++)
             {
                 var symbolKeyView = _diContainer
-                    .InstantiatePrefabForComponent<SymbolKeyButtonView>(symbolKeyPrefab);
+                    .InstantiatePrefabForComponent<SymbolKeyButtonView>(symbolKeyPrefab, poolRoot);
 
                 _layoutKeysPool.Add(symbolKeyView);
             }
@@ -114,7 +117,7 @@ namespace Core.Keyboard.Views
         {
             // Требуется, так как автоматическая перестройка Layout
             // в Unity работает непредсказуемо.
-            foreach (RectTransform layout in layoutKeysRows)
+            foreach (RectTransform layout in layoutsForRebuild)
             {
                 LayoutRebuilder.ForceRebuildLayoutImmediate(layout);
             }
