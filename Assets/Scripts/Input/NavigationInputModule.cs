@@ -1,4 +1,5 @@
 using BNG;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,6 +13,8 @@ namespace Input
         [SerializeField] private VRUISystem vrUiSystem;
         [SerializeField] private InputActionReference moveActionReference;
         [SerializeField] private InputActionReference selectActionReference;
+
+        private DateTime _lastMoveTime = DateTime.MinValue;
 
         private readonly Dictionary<Vector2, MoveDirection> _moveDirections = new()
         {
@@ -53,7 +56,16 @@ namespace Input
 
         private void OnMoveActionPerformed(InputAction.CallbackContext context)
         {
+            DateTime currentTime = DateTime.Now;
+            if (currentTime - _lastMoveTime < TimeSpan.FromMilliseconds(200))
+                return;
+
+            _lastMoveTime = currentTime;
             Vector2 navigationInput = context.ReadValue<Vector2>();
+            navigationInput = new Vector2(
+                Mathf.Round(navigationInput.x), 
+                Mathf.Round(navigationInput.y));
+
             if (navigationInput == Vector2.zero)
                 return;
 
