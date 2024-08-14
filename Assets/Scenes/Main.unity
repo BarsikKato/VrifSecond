@@ -1209,7 +1209,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1652212172}
   - component: {fileID: 1652212171}
-  - component: {fileID: 1652212175}
   - component: {fileID: 1652212173}
   - component: {fileID: 1652212174}
   m_Layer: 0
@@ -1294,22 +1293,6 @@ MonoBehaviour:
     type: 3}
   selectActionReference: {fileID: 5284077032227805635, guid: 05570523f3b927f49b2fb587283fb634,
     type: 3}
---- !u!114 &1652212175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652212169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b39bff2806e6cd945963143e96b82c63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  modules:
-  - {fileID: 1652212173}
-  - {fileID: 1652212174}
 --- !u!1 &1750926315
 GameObject:
   m_ObjectHideFlags: 0
